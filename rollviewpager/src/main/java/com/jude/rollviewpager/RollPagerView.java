@@ -143,6 +143,10 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
         @Override
         public void handleMessage(Message msg) {
             RollPagerView rollPagerView = mRollPagerViewWeakReference.get();
+
+            if (rollPagerView == null)
+            	return;
+
             int cur = rollPagerView.getViewPager().getCurrentItem()+1;
             if(cur>=rollPagerView.mAdapter.getCount()){
                 cur=0;
@@ -186,7 +190,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		if (timer!=null){
 			timer.cancel();
 		}
-		timer = new Timer();
+		timer = new Timer("rollpagerview");
 		//用一个timer定时设置当前项为下一项
 		timer.schedule(new WeakTimerTask(this), delay, delay);
 	}
